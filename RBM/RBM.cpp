@@ -2,7 +2,6 @@
 #include "RBM.h"
 #include "utility.h"
 
-// using namespace arma;
 
 RBM::RBM(long size, int num_v, int num_h, int num_r, 
         unordered_map<int, vector<long> >& movies_info, 
@@ -48,13 +47,6 @@ RBM::RBM(long size, int num_v, int num_h, int num_r,
     //using movies_info, movies_num_ratings to initialize the visible biases
     v_b = new double*[num_vis];
     //DONE:log[p/(1-p)]
-    // for(int i = 0; i < num_vis; i++){
-    //     v_b[i] = new double[num_rat];
-    //     //other initialization
-    //     for(int k=0; k < num_rat; k++){
-    //         v_b[i][k] = 0;
-    //     }
-    // }
     for(int i = 0; i < num_vis; i++){
         v_b[i] = new double[num_rat];
         //other initialization
@@ -68,7 +60,6 @@ RBM::RBM(long size, int num_v, int num_h, int num_r,
                 && movies_info[i][k] != 0){
                 v_b[i][k] = log( double(movies_info[i][k])/double(movies_num_ratings[i] - movies_info[i][k]) );
             }
-            //v_b[i][k] = log(double(k+1)/double(N));
         }
     }
 }
@@ -145,15 +136,10 @@ void RBM::load_model(string W_path, string vb_path, string hb_path){
         }else{
             j++;
         }
-        
-        // cout << "j: " + to_string(j) << endl;
-        // cout << "k: " + to_string(k) << endl;
-        // cout << "i: " + to_string(i) << endl;
+
         if(i == num_vis)break;
     }
-    // cout << "j: " + to_string(j) << endl;
-    // cout << "k: " + to_string(k) << endl;
-    // cout << "i: " + to_string(i) << endl;
+
     i = 0;
     k = 0;
     j = 0;
@@ -165,8 +151,6 @@ void RBM::load_model(string W_path, string vb_path, string hb_path){
         }else{
             k++;
         }
-        // cout << "k: " + to_string(k) << endl;
-        // cout << "i: " + to_string(i) << endl;
     }
 
     i = 0;
@@ -175,7 +159,6 @@ void RBM::load_model(string W_path, string vb_path, string hb_path){
     while(in_hb >> z){
         h_b[j] = z;
         j++;
-        //cout << "j: " + to_string(j) << endl;
     }
     in_W.close();
     in_vb.close();
@@ -256,18 +239,18 @@ void RBM::contrastive_divergence(unordered_map<int, vector<double> >& input, dou
         for(int k = 0; k < num_rat; k++){
             for(int j = 0; j < num_hid; j ++){
                 //update weight
-                //use the difference between initial freqeuncy and distributions
+                //use the difference between initial samples and final samples
                 W[x.first][k][j] += learning_rate * (input[x.first][k] * first_hid_sample[j] - new_vis_samples[x.first][k] * new_hid_sample[j]);
             }
             //update visible unit biases
-            //use the difference between initial samples and final probabilities
+            //use the difference between initial samples and final samples
             v_b[x.first][k] += learning_rate * (input[x.first][k] - new_vis_samples[x.first][k]);
         }
         
     }
     if (debug) cout << "rbm c_d 3" << endl;
     //update hidden unit biases
-    //use difference between initial probabilities and final probabilities
+    //use difference between initial samples and final samples
     for(int j = 0; j < num_hid; j ++){
         h_b[j] += learning_rate * (first_hid_sample[j] - new_hid_sample[j]);//first_hid_probs[j]-new_hid_probs[j]
     }
