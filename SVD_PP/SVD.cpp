@@ -174,7 +174,9 @@ void SVD::TrainInternal() {
                 int currMovieId = 0;
                 for (int p = i - numMovie + 1; p < i + 1; ++p) {
                     currMovieId = trainData[p].movieId;
-                    y[currMovieId][k] += lrInit * (tempYPart[k] - laFactor * y[currMovieId][k]);
+                    double yjVal = y[currMovieId][k];
+                    y[currMovieId][k] += lrInit * (tempYPart[k] - laFactor * yjVal);
+                    sumYj[userId][k] += (y[currMovieId][k] - yjVal);
                 }
             }
         }
