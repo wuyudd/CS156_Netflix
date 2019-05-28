@@ -15,7 +15,7 @@ To run this code, you need to:
 	2. Create a directory named "predictions" to save the predictions.
 			-It will save the predictions every 5 iterations.
 	3. Create a directory named "build" to cmake and make.
-	4. Run ./executable_file_name (here: ./svd) in the "build" directory.
+	4. Run ./executable_file_name (here: ./svd_adv) in the "build" directory.
 
 **************************************************************************
 YOU CAN TUNE THE PARAMETERS!
