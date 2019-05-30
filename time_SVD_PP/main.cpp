@@ -25,7 +25,7 @@ int main() {
     double threshold = 0.00005;
     
     int bin_num = 30;
-    int factor = 5;
+    int factor = 80;
     int max_iter = 50;
     
     string train_file = "../train.txt";
