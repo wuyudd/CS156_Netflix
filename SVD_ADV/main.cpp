@@ -8,7 +8,7 @@ int main() {
     // the parameters are set according to Koren's paper
     double learningrate = 0.005; // learning rate
     double regularization = 0.02; // regularization
-    int numFactor = 50; // number of factors K
+    int numFactor = 20; // number of factors K
     int maxIter = 100; // number of iterations
     string trainFile = "../train.txt"; // train on index != 5 data
     string testFile = "../test.txt"; // test on qual data
